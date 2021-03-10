@@ -8,8 +8,8 @@ assignees: ''
 ---
 
 ### ISSUE
-- Group:  server
-- Type:  feature
+- Group:  `server`
+- Type:  `feature`
 - Detail: fix actions from client redux
 
 ### TODO
