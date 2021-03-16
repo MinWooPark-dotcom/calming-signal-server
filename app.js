@@ -2,16 +2,20 @@ const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const router = require("./routes");
 const dotenv = require('dotenv');
-const path = require('path')
+
+const connect = require('./schemas')
 
 dotenv.config()
 const app = express();
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3002);
+connect()
 
 app.use(morgan('dev'));
 app.use(express.json()) 
 app.use(express.urlencoded({ extended: false }))
+
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session({
     resave: false,
@@ -24,14 +28,7 @@ app.use(session({
     name: 'session-cookie'
 }))
 
-app.use((req, res, next) => {
-    console.log('모든 요청에 다 실행');
-    next()
-})
-
-app.get('/', (req, res) => {
-    res.send('test');
-})
+app.use("/", router);
 
 app.listen(app.get('port'), () => {
     console.log(app.get('port'), '번 포트')
