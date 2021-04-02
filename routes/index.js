@@ -2,32 +2,18 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  board,
-  boardPage,
-  landing,
-  signin,  
-  signup,
-  user,
+    landing,
+    signup,
+    signin,
 } = require("../controllers");
 
-// * GET / board
-router.get("/board/:id", board.get);
-
-// * GET / boardPage
-router.get("/board", boardPage.get);
-
-// * GET / landing
+// * GET /
 router.get("/", landing.get);
 
-// * POST / signin
-router.post("/signin", signin.post);
-
-// * POST / signup
+// * POST /signup
 router.post("/signup", signup.post);
 
-// * GET / userinfo
-router.get("/userinfo", user.get);
-
-
+// * POST /signin
+router.post("/signin", signin.post);
 
 module.exports = router;

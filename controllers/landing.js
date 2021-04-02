@@ -1,10 +1,9 @@
+const { User } = require("../models");
+
 module.exports = {
-    get: async (req, res, next) => {
-    try {
-      res.json({test: 'test landing'});
-    } catch (err) {
-      console.error(err);
-      next(err);
+    get: async (req, res) => {
+        res.status(200).json({
+            message:'landing'
+        })
     }
-  }
 }

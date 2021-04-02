@@ -1,16 +1,15 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require("cors");
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const router = require("./routes");
 const dotenv = require('dotenv');
-
-const connect = require('./schemas')
-
 dotenv.config()
+
 const app = express();
 app.set('port', process.env.PORT || 3002);
-connect()
+
 
 app.use(morgan('dev'));
 app.use(express.json()) 
@@ -27,6 +26,14 @@ app.use(session({
     },
     name: 'session-cookie'
 }))
+
+app.use(
+    cors({
+      origin: "https://localhost:3000", // 배포시s3 도메인으로 변경
+      method: "GET,POST,OPTION",
+      credentials: true, // 쿠키를 요청에 포함
+    })
+  );
 
 app.use("/", router);
 

@@ -1,24 +1,37 @@
-const User = require('../schemas/user');
+const { User } = require("../models");
 
 module.exports = {
-  post: async (req, res, next) => {
-    try {
-      const user = await User.find({
-        email: req.body.email,
-        password: req.body.password,
-      });
-      if (user) {
-          res.status(201).json({
-              message: 'Ok'
-          });
-      } else {
-        res.status(404).json({
-            message: 'Not found'
-      })
-    } 
-}  catch (err) {
-      console.error(err);
-      next(err);
+    post: async (req, res) => {
+        try{
+            const { email, password } = req.body;
+            if (email && password) {
+                const userInfo = await User.findOne({
+                    where: { email, password }
+                  });
+                
+                  // ! console.log("🚀 ~ file: login.js ~ line 11 ~ post: ~ userInfo", userInfo)     
+                // ? User {
+                //    dataValues: {
+                //       id: 1,
+                //       email: 'demo@demo.com',
+                //       password: '12345678',
+                //       name: 'demo-user',
+                //       createdAt: 2021-04-02T05:14:53.000Z,
+                //       updatedAt: 2021-04-02T05:14:53.000Z
+                // ?    },           
+
+                if(!userInfo) {
+                    res.status(400).json({ message: "Not authorized"})
+                } else{
+                    req.session.userId = userInfo.dataValues.id // primary key
+                    res.status(200).json({
+                        message: "OK"
+                    })
+                }
+            }
+        }
+        catch (err) {
+            console.error(err)
+        }
     }
-  }  
 }
