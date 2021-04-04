@@ -5,6 +5,7 @@ const {
     landing,
     signup,
     signin,
+    board
 } = require("../controllers");
 
 // * GET /
@@ -15,5 +16,8 @@ router.post("/signup", signup.post);
 
 // * POST /signin
 router.post("/signin", signin.post);
+
+// GET /board
+router.get('/board', board.get);
 
 module.exports = router;
