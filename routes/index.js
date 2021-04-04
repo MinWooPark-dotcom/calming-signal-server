@@ -18,6 +18,6 @@ router.post("/signup", signup.post);
 router.post("/signin", signin.post);
 
 // GET /board
-router.get('/board', board.get);
+router.get('/board/:category', board.get);
 
 module.exports = router;
