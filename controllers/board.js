@@ -6,6 +6,18 @@ module.exports = {
         // console.log('req.params','req.query',req.params, req.query) // { category: 'free' } { page: '1' }
         try{
             const getPostData = async (pageNum, boardCategory) => {
+            //! 해당 카테고리 총 페이지 수 구하기
+            const numOfPosts = await Post.findAll({    
+                where: {
+                    //    id: {[Op.lte]: 10} // <= 10
+                    // ex) id: { [Op.in]: [1,2,3] }   
+                    // id: {[Op.between]: [pageNum-1, pageNum+9]},                     
+                    category: boardCategory
+                },
+            })
+            // console.log("🚀 ~ file: board.js ~ line 18 ~ getPostData ~ numOfPosts", numOfPosts.length)
+
+            // ! 
             const postData = await Post.findAll({
                 where: {
                     //    id: {[Op.lte]: 10} // <= 10
@@ -13,8 +25,10 @@ module.exports = {
                     // id: {[Op.between]: [pageNum-1, pageNum+9]},                     
                     category: boardCategory
                 },
-                limit:10,
+                limit: 10,
+                offset: pageNum
             })
+            console.log("🚀 ~ file: board.js ~ line 31 ~ getPostData ~ postData", postData)
 
             let data = []
 
@@ -37,7 +51,8 @@ module.exports = {
                         
                 for (let i = 0; i < postData.length; i++) {
                         let obj = {}
-                        obj['num'] = postData[i].dataValues.id
+                        obj['id'] = postData[i].dataValues.id
+                        obj['num'] = i+1
                         obj['title'] = postData[i].dataValues.title
                         obj['content'] = postData[i].dataValues.content
                         obj['category'] = postData[i].dataValues.category
@@ -48,6 +63,8 @@ module.exports = {
                 }
                 res.status(200).json({
                     data,                 
+                    numOfPages: parseInt(numOfPosts.length / 10),
+                    reminingNum : numOfPosts.length % 10
                 })
             } else {
                 res.status(404).json({           
@@ -55,10 +72,10 @@ module.exports = {
                 })
             }
         }
-        const pageNum = Number(req.query.page)
-        console.log("🚀 ~ file: board.js ~ line 58 ~ get: ~ pageNum", pageNum)
+        const pageNum = Number(req.query.page) > 1 ?  Number(req.query.page) * 10 - 10: 0
+        // console.log("🚀 ~ file: board.js ~ line 58 ~ get: ~ pageNum", pageNum)
         const boardCategory = req.params.category
-        console.log("🚀 ~ file: board.js ~ line 59 ~ get: ~ boardCategory", boardCategory)
+        // console.log("🚀 ~ file: board.js ~ line 59 ~ get: ~ boardCategory", boardCategory)
         getPostData(pageNum, boardCategory)
      } catch(err) {
             console.error(err)
@@ -71,11 +88,22 @@ module.exports = {
         const content = req.body.content;
         const category = req.body.category;
 
-        Post.create({
+        const registerPost = await Post.create({
             userId: req.session.userId,
             title,
             content,
             category
         })
+        // console.log("🚀 ~ file: board.js ~ line 80 ~ post: ~ registerPost", registerPost)
+        
+        if(registerPost) {
+            res.status(201).json({
+                message: 'Created'                 
+            })
+        } else {
+            res.status(400).json({
+                message: 'Bad request'                 
+            })
+        }
     }
 }
