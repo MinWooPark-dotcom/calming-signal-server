@@ -5,7 +5,8 @@ const {
     landing,
     signup,
     signin,
-    board
+    board,
+    logout
 } = require("../controllers");
 
 // * GET /
@@ -22,5 +23,8 @@ router.get('/board/:category', board.get);
 
 // POST / board
 router.post('/board/', board.post);
+
+// POST /logout
+router.post('/logout', logout.post)
 
 module.exports = router;

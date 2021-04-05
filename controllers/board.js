@@ -3,16 +3,17 @@ const { Op } = require('sequelize')
 
 module.exports = {
     get: async (req, res) => {
-        console.log('req.params','req.query',req.params, req.query) // { category: 'free' } { page: '1' }
+        // console.log('req.params','req.query',req.params, req.query) // { category: 'free' } { page: '1' }
         try{
             const getPostData = async (pageNum, boardCategory) => {
             const postData = await Post.findAll({
                 where: {
                     //    id: {[Op.lte]: 10} // <= 10
                     // ex) id: { [Op.in]: [1,2,3] }   
-                    id: {[Op.between]: [pageNum-1, pageNum+9]}, 
+                    // id: {[Op.between]: [pageNum-1, pageNum+9]},                     
                     category: boardCategory
                 },
+                limit:10,
             })
 
             let data = []
@@ -55,7 +56,9 @@ module.exports = {
             }
         }
         const pageNum = Number(req.query.page)
+        console.log("🚀 ~ file: board.js ~ line 58 ~ get: ~ pageNum", pageNum)
         const boardCategory = req.params.category
+        console.log("🚀 ~ file: board.js ~ line 59 ~ get: ~ boardCategory", boardCategory)
         getPostData(pageNum, boardCategory)
      } catch(err) {
             console.error(err)
@@ -69,7 +72,7 @@ module.exports = {
         const category = req.body.category;
 
         Post.create({
-            userId:     
+            userId: req.session.userId,
             title,
             content,
             category
