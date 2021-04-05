@@ -1,4 +1,6 @@
 const express = require('express');
+const https = require('https');
+const fs = require('fs');
 const morgan = require('morgan');
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
@@ -35,8 +37,19 @@ app.use(
     })
   );
 
-app.use("/", router);
+// app.use("/", router);
 
-app.listen(app.get('port'), () => {
-    console.log(app.get('port'), '번 포트')
-})
+https
+  .createServer(
+    {
+      key: fs.readFileSync(__dirname + '/key.pem', 'utf-8'),
+      cert: fs.readFileSync(__dirname + '/cert.pem', 'utf-8'),
+    },
+    app.use("/", router)
+  )
+  .listen(3002);
+
+
+// app.listen(app.get('port'), () => {
+//     console.log(app.get('port'), '번 포트')
+// })

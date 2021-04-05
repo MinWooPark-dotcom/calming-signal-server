@@ -11,6 +11,7 @@ module.exports = {
                     //    id: {[Op.lte]: 10} // <= 10
                     // ex) id: { [Op.in]: [1,2,3] }   
                     id: {[Op.between]: [pageNum-1, pageNum+9]}, 
+                    category: boardCategory
                 },
             })
 
@@ -21,11 +22,12 @@ module.exports = {
                     include: [{
                         model: User,
                         required: false,
+                        // User테이블에 where조건 넣음
                         // where: {
                             // id:  postData[i].dataValues.userId
                             // ex) id: { [Op.in]: [1,2,3] }   
                             // id: {[Op.lte]: 10} // <= 10
-                        // },
+                        // },            
                             attributes: ['name']
                         }]
                     })
@@ -58,5 +60,19 @@ module.exports = {
      } catch(err) {
             console.error(err)
         }
+    },
+    post: async (req, res) => {
+        console.log('req.session.userId', req.session.userId)
+        console.log(req.body)  
+        const title = req.body.title;
+        const content = req.body.content;
+        const category = req.body.category;
+
+        Post.create({
+            userId:     
+            title,
+            content,
+            category
+        })
     }
 }

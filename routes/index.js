@@ -20,4 +20,7 @@ router.post("/signin", signin.post);
 // GET /board
 router.get('/board/:category', board.get);
 
+// POST / board
+router.post('/board/', board.post);
+
 module.exports = router;
