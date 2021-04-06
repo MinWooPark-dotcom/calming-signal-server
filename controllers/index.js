@@ -4,5 +4,6 @@ module.exports = {
   signin: require("./signin"),
   board: require("./board"),
   logout: require("./logout"),
-  content: require('./content')
+  content: require('./content'),
+  comment: require('./comment')
 }

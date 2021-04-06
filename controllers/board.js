@@ -1,4 +1,4 @@
-const { Post,User } = require('../models');
+const { Post,User, Comment } = require('../models');
 const { Op } = require('sequelize')
 
 module.exports = {
@@ -28,7 +28,7 @@ module.exports = {
                 limit: 10,
                 offset: pageNum
             })
-            console.log("🚀 ~ file: board.js ~ line 31 ~ getPostData ~ postData", postData)
+            // console.log("🚀 ~ file: board.js ~ line 31 ~ getPostData ~ postData", postData)
 
             let data = []
 
@@ -36,7 +36,7 @@ module.exports = {
                 const writer = await Post.findAll({
                     include: [{
                         model: User,
-                        required: false,
+                        required: false, // left join
                         // User테이블에 where조건 넣음
                         // where: {
                             // id:  postData[i].dataValues.userId
@@ -44,9 +44,13 @@ module.exports = {
                             // id: {[Op.lte]: 10} // <= 10
                         // },            
                             attributes: ['name']
+                        },{
+                            model: Comment,
+                            require: false,
+                            attributes: ['title', 'content']
                         }]
                     })
-                        // console.log("🚀 ~ file: board.js ~ line 20 ~ get: ~ writer", writer)
+                        // console.log("🚀 ~ file: board.js ~ line 20 ~ get: ~ writer", writer[0].Comments[0].dataValues) // { title: '11', content: '1111' }
                         // console.log("🚀 ~ file: board.js ~ line 23 ~ get: ~ writer", writer[0].User.dataValues) //  { name: 'demo-user' }
                         
                 for (let i = 0; i < postData.length; i++) {
