@@ -8,7 +8,8 @@ const {
     board,
     logout,
     content,
-    comment
+    comment,
+    userInfo
 } = require("../controllers");
 
 // * GET /
@@ -34,5 +35,8 @@ router.get('/content/:title', content.get)
 
 // POST / comment
 router.post('/comment', comment.post)
+
+// GET / userInfo 
+router.get('/userInfo', userInfo.get)
 
 module.exports = router;
