@@ -32,7 +32,7 @@ app.use(session({
 app.use(
     cors({
       origin: "https://localhost:3000", // 배포시s3 도메인으로 변경
-      method: "GET,POST,OPTION",
+      method: "GET,POST,OPTION, PATCH",
       credentials: true, // 쿠키를 요청에 포함
     })
   );

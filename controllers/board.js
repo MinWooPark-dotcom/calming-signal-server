@@ -3,6 +3,7 @@ const { Op } = require('sequelize')
 
 module.exports = {
     get: async (req, res) => {
+        console.log('req.session.useId>>>>?', req.session.useId)
         // console.log('req.params','req.query',req.params, req.query) // { category: 'free' } { page: '1' }
         try{
             const getPostData = async (pageNum, boardCategory) => {

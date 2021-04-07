@@ -17,12 +17,16 @@ module.exports = {
                     id: contentId
                 }
             })
+            console.log("🚀 ~ file: content.js ~ line 20 ~ get: ~ getContent", getContent)
             // console.log("🚀 ~ file: content.js ~ line 20 ~ get: ~ getContent", getContent.User.dataValues)
             
+            // ! 댓글 작성일
+            const commentCreatedAtArr = getContent.Comments.map(el => el.createdAt)
+            console.log("🚀 ~ file: content.js ~ line 25 ~ get: ~ commentCreatedAtArr", commentCreatedAtArr)
             // ! 댓글 내용
             // console.log("🚀 ~ file: content.js ~ line 20 ~ get: ~ getContent", getContent.Comments[0].content)
             const commentArr = getContent.Comments.map(el => el.content)
-            console.log("🚀 ~ file: content.js ~ line 25 ~ get: ~ commentArr", commentArr) // [ '111', '222', '3333' ]
+            // console.log("🚀 ~ file: content.js ~ line 25 ~ get: ~ commentArr", commentArr) // [ '111', '222', '3333' ]
             
             // ! 댓글 작성자 찾기
             const commentUserIdArr = getContent.dataValues.Comments.map((el) => el.dataValues.userId);
@@ -44,11 +48,13 @@ module.exports = {
             // ! 댓글 작성자, 내용 객체로 만들기 
             const commentData = {
                 writer: getCommentUserName,
-                content: commentArr
+                content: commentArr,
+                createdAt: commentCreatedAtArr
             };
 
             res.status(200).json({
             userName: getContent.dataValues.User.dataValues.name, // 작성자
+            postId: getContent.dataValues.id,
             title: getContent.dataValues.title, // 글 제목
             content: getContent.dataValues.content, // 글 내용 
             category: getContent.dataValues.category, // 글 카테고리

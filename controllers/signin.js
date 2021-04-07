@@ -29,6 +29,7 @@ module.exports = {
                     req.session.userId = userInfo.dataValues.id // primary key
                     res.status(200).json({
                         message: "OK"
+                        // message: userInfo.dataValues.id
                     })
                 }
             }
