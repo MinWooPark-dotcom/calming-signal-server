@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       numOfViews: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
