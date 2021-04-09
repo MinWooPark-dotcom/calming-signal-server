@@ -7,7 +7,7 @@ module.exports = {
         // console.log('req.params','req.query',req.params, req.query) // { category: 'free' } { page: '1' }
         try{
             const getPostData = async (pageNum, boardCategory) => {
-            //! 해당 카테고리 총 페이지 수 구하기
+            //! 해당 카테고리 총 페이지 수 구하기: 게시판 페이지 수 제한하기 위함
             const numOfPosts = await Post.findAll({    
                 where: {
                     //    id: {[Op.lte]: 10} // <= 10
@@ -18,7 +18,7 @@ module.exports = {
             })
             // console.log("🚀 ~ file: board.js ~ line 18 ~ getPostData ~ numOfPosts", numOfPosts.length)
 
-            // ! 
+            // ! 해당 카테고리 게시글 모두 찾기, 10개 제한해서 카테고리 페이지 당 10개만 보여주기
             const postData = await Post.findAll({
                 where: {
                     //    id: {[Op.lte]: 10} // <= 10
@@ -31,29 +31,34 @@ module.exports = {
             })
             // console.log("🚀 ~ file: board.js ~ line 31 ~ getPostData ~ postData", postData)
 
-            let data = []
-
             if (postData.length !== 0) { 
+                //! 게시글 각 작성자 찾기
                 const writer = await Post.findAll({
                     include: [{
                         model: User,
                         required: false, // left join
                         // User테이블에 where조건 넣음
-                        // where: {
+                        where: {
                             // id:  postData[i].dataValues.userId
                             // ex) id: { [Op.in]: [1,2,3] }   
                             // id: {[Op.lte]: 10} // <= 10
-                        // },            
+                        },            
                             attributes: ['name']
                         },{
                             model: Comment,
                             require: false,
                             attributes: ['title', 'content']
-                        }]
+                        }],
+                    where: {
+                        category: boardCategory
+                        },    
                     })
+                        // console.log("🚀 ~ file: board.js ~ line 55 ~ getPostData ~ writer", writer)
                         // console.log("🚀 ~ file: board.js ~ line 20 ~ get: ~ writer", writer[0].Comments[0].dataValues) // { title: '11', content: '1111' }
-                        // console.log("🚀 ~ file: board.js ~ line 23 ~ get: ~ writer", writer[0].User.dataValues) //  { name: 'demo-user' }
-                        
+                        // console.log("🚀 ~ file: board.js ~ line 23 ~ get: ~ writer", writer[5].User.dataValues) //  { name: 'demo-user' }
+                let data = []
+                
+                
                 for (let i = 0; i < postData.length; i++) {
                         let obj = {}
                         obj['id'] = postData[i].dataValues.id
@@ -61,11 +66,12 @@ module.exports = {
                         obj['title'] = postData[i].dataValues.title
                         obj['content'] = postData[i].dataValues.content
                         obj['category'] = postData[i].dataValues.category
-                        obj['writer'] = writer[i].User.dataValues.name
                         obj['numOfViews'] = postData[i].dataValues.numOfViews
                         obj['createdAt'] = postData[i].dataValues.createdAt
+                        obj['writer'] = writer[i].User.dataValues.name
                         data.push(obj)
-                }
+                    }
+
                 res.status(200).json({
                     data,                 
                     numOfPages: parseInt(numOfPosts.length / 10),

@@ -13,13 +13,22 @@ module.exports = {
                     id: userId
                 }
             })
-            console.log("🚀 ~ file: userInfo.js ~ line 12 ~ get: ~ userInfo", userInfo.Pets[0].dataValues)
-            res.status(200).json({
-                email: userInfo.dataValues.email,
-                name: userInfo.dataValues.name,
-                petName: userInfo.Pets[0].dataValues.name,
-                petBreed: userInfo.Pets[0].dataValues.breed
-            })
+            console.log("🚀 ~ file: userInfo.js ~ line 16 ~ get: ~ userInfo", userInfo.Pets[0])
+            if (userInfo.Pets.length !== 0) {
+                console.log('if (userInfo.Pets[0].dataValues) {')
+                res.status(200).json({
+                    email: userInfo.dataValues.email,
+                    name: userInfo.dataValues.name,
+                    petName: userInfo.Pets[0].dataValues.name,
+                    petBreed: userInfo.Pets[0].dataValues.breed
+                })
+            } else {
+                console.log('} else {')
+                 res.status(200).json({
+                    email: userInfo.dataValues.email,
+                    name: userInfo.dataValues.name,
+                })
+            }
         }
         catch(err) {
             console.error(err)
