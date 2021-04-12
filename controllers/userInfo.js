@@ -14,19 +14,25 @@ module.exports = {
                 }
             })
             console.log("🚀 ~ file: userInfo.js ~ line 16 ~ get: ~ userInfo", userInfo.Pets[0])
-            if (userInfo.Pets.length !== 0) {
-                console.log('if (userInfo.Pets[0].dataValues) {')
-                res.status(200).json({
-                    email: userInfo.dataValues.email,
-                    name: userInfo.dataValues.name,
-                    petName: userInfo.Pets[0].dataValues.name,
-                    petBreed: userInfo.Pets[0].dataValues.breed
-                })
+            //! 테스트 해 봐야함
+            if (userInfo) {                
+                if (userInfo.Pets.length !== 0) {
+                    console.log('if (userInfo.Pets[0].dataValues) {')
+                    res.status(200).json({
+                        email: userInfo.dataValues.email,
+                        name: userInfo.dataValues.name,
+                        petName: userInfo.Pets[0].dataValues.name,
+                        petBreed: userInfo.Pets[0].dataValues.breed
+                    })
+                } else {
+                     res.status(200).json({
+                        email: userInfo.dataValues.email,
+                        name: userInfo.dataValues.name,
+                    })
+                }
             } else {
-                console.log('} else {')
-                 res.status(200).json({
-                    email: userInfo.dataValues.email,
-                    name: userInfo.dataValues.name,
+                res.status(401).json({
+                    message: "Unauthorized"
                 })
             }
         }

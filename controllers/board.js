@@ -115,7 +115,7 @@ module.exports = {
             })
         } else {
             res.status(400).json({
-                message: 'Bad request'                 
+                message: 'Bad Request'                 
             })
         }
     }
