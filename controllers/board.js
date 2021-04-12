@@ -29,7 +29,7 @@ module.exports = {
                 limit: 10,
                 offset: pageNum
             })
-            // console.log("🚀 ~ file: board.js ~ line 31 ~ getPostData ~ postData", postData)
+            console.log("🚀 ~ file: board.js ~ line 31 ~ getPostData ~ postData", postData)
 
             if (postData.length !== 0) { 
                 //! 게시글 각 작성자 찾기
@@ -51,9 +51,11 @@ module.exports = {
                         }],
                     where: {
                         category: boardCategory
-                        },    
+                        },
+                        limit: 10,
+                        offset: pageNum    
                     })
-                        // console.log("🚀 ~ file: board.js ~ line 55 ~ getPostData ~ writer", writer)
+                        console.log("🚀 ~ file: board.js ~ line 55 ~ getPostData ~ writer", writer.length)
                         // console.log("🚀 ~ file: board.js ~ line 20 ~ get: ~ writer", writer[0].Comments[0].dataValues) // { title: '11', content: '1111' }
                         // console.log("🚀 ~ file: board.js ~ line 23 ~ get: ~ writer", writer[5].User.dataValues) //  { name: 'demo-user' }
                 let data = []
