@@ -25,6 +25,7 @@ module.exports = {
                   name,
                   email,
                   password,
+                  salt,
                 },
               });
               // console.log("🚀 ~ file: signup.js ~ line 20 ~ post: ~ user", user)
