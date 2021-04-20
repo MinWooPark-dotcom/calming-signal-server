@@ -4,7 +4,8 @@ module.exports = {
   signin: require("./signin"),
   board: require("./board"),
   logout: require("./logout"),
-  content: require('./content'),
-  comment: require('./comment'),
-  userInfo: require('./userInfo')
-}
+  content: require("./content"),
+  comment: require("./comment"),
+  userInfo: require("./userInfo"),
+  mypage: require("./mypage"),
+};
