@@ -1,41 +1,50 @@
+const crypto = require("crypto");
 const { User } = require("../models");
 
 module.exports = {
-    post: async (req, res) => {
-        try{
-            const { email, password } = req.body;
-            // console.log("🚀 ~ file: signin.js ~ line 7 ~ post: ~ email", email)
-            // console.log("🚀 ~ file: signin.js ~ line 7 ~ post: ~ password", password)
+  post: async (req, res) => {
+    try {
+      const { email, password } = req.body;
 
-            if (email && password) {
-                const userInfo = await User.findOne({
-                    where: { email, password }
-                  });
-                
-                  // ! console.log("🚀 ~ file: login.js ~ line 11 ~ post: ~ userInfo", userInfo)     
-                // ? User {
-                //    dataValues: {
-                //       id: 1,
-                //       email: 'demo@demo.com',
-                //       password: '12345678',
-                //       name: 'demo-user',
-                //       createdAt: 2021-04-02T05:14:53.000Z,
-                //       updatedAt: 2021-04-02T05:14:53.000Z
-                // ?    },           
+      if (email && password) {
+        const getSalt = await User.findOne({
+          where: { email },
+        });
 
-                if(!userInfo) {
-                    res.status(401).json({ message: "Unauthorized"})
-                } else{
-                    req.session.userId = userInfo.dataValues.id // primary key
-                    res.status(200).json({
-                        message: "OK"
-                        // message: userInfo.dataValues.id
-                    })
-                }
+        let salt = getSalt.dataValues.salt;
+
+        crypto.pbkdf2(
+          password,
+          salt,
+          100000,
+          64,
+          "sha512",
+          async (err, key) => {
+            //   console.log("password:", key.toString("base64"));
+            let getPassword = key.toString("base64");
+
+            if (email && getPassword) {
+              const userInfo = await User.findOne({
+                where: {
+                  email,
+                  password: getPassword,
+                },
+              });
+
+              if (!userInfo) {
+                res.status(401).json({ message: "Unauthorized" });
+              } else {
+                req.session.userId = userInfo.dataValues.id; // primary key
+                res.status(200).json({
+                  message: "OK",
+                });
+              }
             }
-        }
-        catch (err) {
-            console.error(err)
-        }
+          }
+        );
+      }
+    } catch (err) {
+      console.error(err);
     }
-}
+  },
+};
