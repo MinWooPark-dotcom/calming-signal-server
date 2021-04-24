@@ -43,4 +43,10 @@ router.get("/userinfo", userInfo.get);
 // * PATCH /mypage
 router.patch("/mypage/:category", mypage.patch);
 
+// * POST /mypage
+router.post("/mypage/:category", mypage.post);
+
+// * DELETE /mypage
+router.delete("/mypage/:category", mypage.delete);
+
 module.exports = router;
