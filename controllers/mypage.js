@@ -100,7 +100,11 @@ module.exports = {
           },
         }
       );
-      if (changeUserName) {
+      console.log(
+        "🚀 ~ file: mypage.js ~ line 103 ~ patch: ~ changeUserName",
+        changeUserName
+      );
+      if (changeUserName[0] === 1) {
         res.status(200).json({
           message: "OK",
         });
@@ -122,7 +126,11 @@ module.exports = {
           },
         }
       );
-      if (changePetName) {
+      console.log(
+        "🚀 ~ file: mypage.js ~ line 125 ~ patch: ~ changePetName",
+        changePetName
+      );
+      if (changePetName[0] === 1) {
         res.status(200).json({
           message: "OK",
         });
@@ -130,7 +138,7 @@ module.exports = {
         res.status(401).json({ message: "Unauthorized" });
       }
     } else if (category === "petbreed") {
-      const changePetName = await Pet.update(
+      const changePetBreed = await Pet.update(
         {
           breed: newPetBreed,
         },
@@ -140,7 +148,11 @@ module.exports = {
           },
         }
       );
-      if (changePetName) {
+      console.log(
+        "🚀 ~ file: mypage.js ~ line 143 ~ patch: ~ changePetBreed",
+        changePetBreed
+      );
+      if (changePetBreed[0] === 1) {
         res.status(200).json({
           message: "OK",
         });
@@ -151,4 +163,49 @@ module.exports = {
 
     // ! 반려견종 변경
   },
+  post: async (req, res) => {
+    const { userId } = req.session;
+    const { category } = req.params;
+    // console.log("🚀 ~ file: mypage.js ~ line 10 ~ post: ~ category", category); // password
+    const { newPetName, prevPetBreed, newPetBreed } = req.body;
+    // ! 반려견 이름 변경
+    if (category === "petname") {
+      console.log(category);
+      console.log(newPetName);
+      const changePetName = await Pet.create({
+        userId,
+        name: newPetName,
+      });
+      console.log(
+        "🚀 ~ file: mypage.js ~ line 125 ~ patch: ~ changePetName",
+        changePetName
+      );
+      if (changePetName) {
+        res.status(200).json({
+          message: "OK",
+        });
+      } else {
+        res.status(401).json({ message: "Unauthorized" });
+      }
+    } else if (category === "petbreed") {
+      const changePetBreed = await Pet.create({
+        userId,
+        breed: newPetBreed,
+      });
+      console.log(
+        "🚀 ~ file: mypage.js ~ line 143 ~ patch: ~ changePetBreed",
+        changePetBreed
+      );
+      if (changePetBreed) {
+        res.status(200).json({
+          message: "OK",
+        });
+      } else {
+        res.status(401).json({ message: "Unauthorized" });
+      }
+    }
+
+    // ! 반려견종 변경
+  },
+  delete: async (req, res) => {},
 };
