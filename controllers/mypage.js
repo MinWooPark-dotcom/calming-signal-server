@@ -1,4 +1,4 @@
-const { User, Pet } = require("../models");
+const { User, Pet, Location } = require("../models");
 const crypto = require("crypto");
 
 module.exports = {
@@ -14,6 +14,7 @@ module.exports = {
       newPetName,
       prevPetBreed,
       newPetBreed,
+      city,
     } = req.body;
 
     //! 비밀번호 변경
@@ -162,6 +163,41 @@ module.exports = {
     }
 
     // ! 반려견종 변경
+
+    //! 지역 변경
+    else if (category === "location") {
+      console.log("🚀 ~ file: mypage.js ~ line 213 ~ post: ~ city", city);
+      const getLocationId = await Location.findOne({
+        where: {
+          name: city,
+        },
+      });
+      // console.log(
+      //   "🚀 ~ file: mypage.js ~ line 175 ~ patch: ~ getLocationId",
+      //   getLocationId
+      // );
+      const updatedUser = await User.update(
+        {
+          locationId: getLocationId.dataValues.id,
+        },
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+      console.log(
+        "🚀 ~ file: mypage.js ~ line 189 ~ patch: ~ updatedUser",
+        updatedUser
+      );
+      if (updatedUser[0] === 1) {
+        res.status(200).json({
+          message: "OK",
+        });
+      } else {
+        res.status(401).json({ message: "Unauthorized" });
+      }
+    }
   },
   post: async (req, res) => {
     const { userId } = req.session;
