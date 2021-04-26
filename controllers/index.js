@@ -8,4 +8,5 @@ module.exports = {
   comment: require("./comment"),
   userInfo: require("./userInfo"),
   mypage: require("./mypage"),
+  weather: require("./weather"),
 };

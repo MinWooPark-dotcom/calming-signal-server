@@ -11,6 +11,7 @@ const {
   comment,
   userInfo,
   mypage,
+  weather,
 } = require("../controllers");
 
 // * GET /
@@ -48,5 +49,10 @@ router.post("/mypage/:category", mypage.post);
 
 // * DELETE /mypage
 router.delete("/mypage/:category", mypage.delete);
+
+// * GET /weather
+router.get("/weather", weather.get);
+// * POST /weather
+router.post("/weather", weather.post);
 
 module.exports = router;
