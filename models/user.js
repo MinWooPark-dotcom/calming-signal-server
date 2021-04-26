@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "userId",
         sourceKey: "id",
       });
+      models.User.belongsTo(models.Location, {
+        foreignKey: "locationId",
+        targetKey: "id",
+      });
     }
   }
   User.init(
@@ -22,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       name: DataTypes.STRING,
+      locationId: DataTypes.INTEGER,
       salt: DataTypes.STRING,
     },
     {
