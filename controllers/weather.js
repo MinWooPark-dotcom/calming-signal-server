@@ -1,3 +1,5 @@
+const { Location } = require("../models");
+
 const axios = require("axios");
 const { weather } = require(".");
 require("dotenv").config();
@@ -53,6 +55,174 @@ const getWeather = async (cityId, cityLat, cityLon, weatherApiKey) => {
   return result;
 };
 
+const handleWeatherData = (weatherData, cityName = "서울") => {
+  if (weatherData) {
+    if (weatherData.temp >= 29) {
+      return {
+        cityName,
+        temp: weatherData.temp,
+        feelLike: weatherData.feelLike,
+        humidity: weatherData.humidity,
+        tempMin: weatherData.tempMin,
+        tempMax: weatherData.tempMax,
+        weatherDescription: weatherData.weatherDescription,
+        weatherIcon: weatherData.weatherIcon,
+        windSpeed: weatherData.windSpeed,
+        windDeg: weatherData.windDeg,
+        tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
+        airQualityIndex: weatherData.airQualityIndex,
+        small: "매우 위험",
+        middle: "매우 위험",
+        large: "매우 위험",
+      };
+    } else if (21 < weatherData.temp) {
+      return {
+        cityName,
+        temp: weatherData.temp,
+        feelLike: weatherData.feelLike,
+        humidity: weatherData.humidity,
+        tempMin: weatherData.tempMin,
+        tempMax: weatherData.tempMax,
+        weatherDescription: weatherData.weatherDescription,
+        weatherIcon: weatherData.weatherIcon,
+        windSpeed: weatherData.windSpeed,
+        windDeg: weatherData.windDeg,
+        tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
+        airQualityIndex: weatherData.airQualityIndex,
+        small: "주의",
+        middle: "주의",
+        large: "위험",
+      };
+    } else if (18 < weatherData.temp) {
+      return {
+        cityName,
+        temp: weatherData.temp,
+        feelLike: weatherData.feelLike,
+        humidity: weatherData.humidity,
+        tempMin: weatherData.tempMin,
+        tempMax: weatherData.tempMax,
+        weatherDescription: weatherData.weatherDescription,
+        weatherIcon: weatherData.weatherIcon,
+        windSpeed: weatherData.windSpeed,
+        windDeg: weatherData.windDeg,
+        tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
+        airQualityIndex: weatherData.airQualityIndex,
+        small: "매우 안전",
+        middle: "매우 안전",
+        large: "안전",
+      };
+    } else if (12 <= weatherData.temp) {
+      return {
+        cityName,
+        temp: weatherData.temp,
+        feelLike: weatherData.feelLike,
+        humidity: weatherData.humidity,
+        tempMin: weatherData.tempMin,
+        tempMax: weatherData.tempMax,
+        weatherDescription: weatherData.weatherDescription,
+        weatherIcon: weatherData.weatherIcon,
+        windSpeed: weatherData.windSpeed,
+        windDeg: weatherData.windDeg,
+        tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
+        airQualityIndex: weatherData.airQualityIndex,
+        small: "매우 안전",
+        middle: "매우 안전",
+        large: "매우 안전",
+      };
+    } else if (7 <= weatherData.temp) {
+      return {
+        cityName,
+        temp: weatherData.temp,
+        feelLike: weatherData.feelLike,
+        humidity: weatherData.humidity,
+        tempMin: weatherData.tempMin,
+        tempMax: weatherData.tempMax,
+        weatherDescription: weatherData.weatherDescription,
+        weatherIcon: weatherData.weatherIcon,
+        windSpeed: weatherData.windSpeed,
+        windDeg: weatherData.windDeg,
+        tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
+        airQualityIndex: weatherData.airQualityIndex,
+        small: "안전",
+        middle: "안전",
+        large: "매우 안전",
+      };
+    } else if (4 <= weatherData.temp) {
+      return {
+        cityName,
+        temp: weatherData.temp,
+        feelLike: weatherData.feelLike,
+        humidity: weatherData.humidity,
+        tempMin: weatherData.tempMin,
+        tempMax: weatherData.tempMax,
+        weatherDescription: weatherData.weatherDescription,
+        weatherIcon: weatherData.weatherIcon,
+        windSpeed: weatherData.windSpeed,
+        windDeg: weatherData.windDeg,
+        tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
+        airQualityIndex: weatherData.airQualityIndex,
+        small: "보통",
+        middle: "보통",
+        large: "안전",
+      };
+    } else if (-1 <= weatherData.temp) {
+      return {
+        cityName,
+        temp: weatherData.temp,
+        feelLike: weatherData.feelLike,
+        humidity: weatherData.humidity,
+        tempMin: weatherData.tempMin,
+        tempMax: weatherData.tempMax,
+        weatherDescription: weatherData.weatherDescription,
+        weatherIcon: weatherData.weatherIcon,
+        windSpeed: weatherData.windSpeed,
+        windDeg: weatherData.windDeg,
+        tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
+        airQualityIndex: weatherData.airQualityIndex,
+        small: "보통",
+        middle: "보통",
+        large: "보통",
+      };
+    } else if (-8 <= weatherData.temp < -1) {
+      return {
+        cityName,
+        temp: weatherData.temp,
+        feelLike: weatherData.feelLike,
+        humidity: weatherData.humidity,
+        tempMin: weatherData.tempMin,
+        tempMax: weatherData.tempMax,
+        weatherDescription: weatherData.weatherDescription,
+        weatherIcon: weatherData.weatherIcon,
+        windSpeed: weatherData.windSpeed,
+        windDeg: weatherData.windDeg,
+        tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
+        airQualityIndex: weatherData.airQualityIndex,
+        small: "위험",
+        middle: "위험",
+        large: "보통",
+      };
+    } else if (-8 > weatherData.temp) {
+      return {
+        cityName,
+        temp: weatherData.temp,
+        feelLike: weatherData.feelLike,
+        humidity: weatherData.humidity,
+        tempMin: weatherData.tempMin,
+        tempMax: weatherData.tempMax,
+        weatherDescription: weatherData.weatherDescription,
+        weatherIcon: weatherData.weatherIcon,
+        windSpeed: weatherData.windSpeed,
+        windDeg: weatherData.windDeg,
+        tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
+        airQualityIndex: weatherData.airQualityIndex,
+        small: "위험",
+        middle: "위험",
+        large: "위험",
+      };
+    }
+  }
+};
+
 module.exports = {
   get: async (req, res) => {
     try {
@@ -70,169 +240,10 @@ module.exports = {
       // console.log("🚀 ~ file: landing.js ~ line 63 ~ //getWeather ~ weatherData", weatherData)
 
       if (weatherData) {
-        if (weatherData.temp >= 29) {
-          res.status(200).json({
-            cityName: "서울",
-            temp: weatherData.temp,
-            feelLike: weatherData.feelLike,
-            humidity: weatherData.humidity,
-            tempMin: weatherData.tempMin,
-            tempMax: weatherData.tempMax,
-            weatherDescription: weatherData.weatherDescription,
-            weatherIcon: weatherData.weatherIcon,
-            windSpeed: weatherData.windSpeed,
-            windDeg: weatherData.windDeg,
-            tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
-            airQualityIndex: weatherData.airQualityIndex,
-            small: "매우 위험",
-            middle: "매우 위험",
-            large: "매우 위험",
-          });
-        } else if (21 < weatherData.temp) {
-          res.status(200).json({
-            cityName: "서울",
-            temp: weatherData.temp,
-            feelLike: weatherData.feelLike,
-            humidity: weatherData.humidity,
-            tempMin: weatherData.tempMin,
-            tempMax: weatherData.tempMax,
-            weatherDescription: weatherData.weatherDescription,
-            weatherIcon: weatherData.weatherIcon,
-            windSpeed: weatherData.windSpeed,
-            windDeg: weatherData.windDeg,
-            tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
-            airQualityIndex: weatherData.airQualityIndex,
-            small: "주의",
-            middle: "주의",
-            large: "위험",
-          });
-        } else if (18 < weatherData.temp) {
-          res.status(200).json({
-            cityName: "서울",
-            temp: weatherData.temp,
-            feelLike: weatherData.feelLike,
-            humidity: weatherData.humidity,
-            tempMin: weatherData.tempMin,
-            tempMax: weatherData.tempMax,
-            weatherDescription: weatherData.weatherDescription,
-            weatherIcon: weatherData.weatherIcon,
-            windSpeed: weatherData.windSpeed,
-            windDeg: weatherData.windDeg,
-            tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
-            airQualityIndex: weatherData.airQualityIndex,
-            small: "매우 안전",
-            middle: "매우 안전",
-            large: "안전",
-          });
-        } else if (12 <= weatherData.temp) {
-          res.status(200).json({
-            cityName: "서울",
-            temp: weatherData.temp,
-            feelLike: weatherData.feelLike,
-            humidity: weatherData.humidity,
-            tempMin: weatherData.tempMin,
-            tempMax: weatherData.tempMax,
-            weatherDescription: weatherData.weatherDescription,
-            weatherIcon: weatherData.weatherIcon,
-            windSpeed: weatherData.windSpeed,
-            windDeg: weatherData.windDeg,
-            tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
-            airQualityIndex: weatherData.airQualityIndex,
-            small: "매우 안전",
-            middle: "매우 안전",
-            large: "매우 안전",
-          });
-        } else if (7 <= weatherData.temp) {
-          res.status(200).json({
-            cityName: "서울",
-            temp: weatherData.temp,
-            feelLike: weatherData.feelLike,
-            humidity: weatherData.humidity,
-            tempMin: weatherData.tempMin,
-            tempMax: weatherData.tempMax,
-            weatherDescription: weatherData.weatherDescription,
-            weatherIcon: weatherData.weatherIcon,
-            windSpeed: weatherData.windSpeed,
-            windDeg: weatherData.windDeg,
-            tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
-            airQualityIndex: weatherData.airQualityIndex,
-            small: "안전",
-            middle: "안전",
-            large: "매우 안전",
-          });
-        } else if (4 <= weatherData.temp) {
-          res.status(200).json({
-            cityName: "서울",
-            temp: weatherData.temp,
-            feelLike: weatherData.feelLike,
-            humidity: weatherData.humidity,
-            tempMin: weatherData.tempMin,
-            tempMax: weatherData.tempMax,
-            weatherDescription: weatherData.weatherDescription,
-            weatherIcon: weatherData.weatherIcon,
-            windSpeed: weatherData.windSpeed,
-            windDeg: weatherData.windDeg,
-            tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
-            airQualityIndex: weatherData.airQualityIndex,
-            small: "보통",
-            middle: "보통",
-            large: "안전",
-          });
-        } else if (-1 <= weatherData.temp) {
-          res.status(200).json({
-            cityName: "서울",
-            temp: weatherData.temp,
-            feelLike: weatherData.feelLike,
-            humidity: weatherData.humidity,
-            tempMin: weatherData.tempMin,
-            tempMax: weatherData.tempMax,
-            weatherDescription: weatherData.weatherDescription,
-            weatherIcon: weatherData.weatherIcon,
-            windSpeed: weatherData.windSpeed,
-            windDeg: weatherData.windDeg,
-            tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
-            airQualityIndex: weatherData.airQualityIndex,
-            small: "보통",
-            middle: "보통",
-            large: "보통",
-          });
-        } else if (-8 <= weatherData.temp < -1) {
-          res.status(200).json({
-            cityName: "서울",
-            temp: weatherData.temp,
-            feelLike: weatherData.feelLike,
-            humidity: weatherData.humidity,
-            tempMin: weatherData.tempMin,
-            tempMax: weatherData.tempMax,
-            weatherDescription: weatherData.weatherDescription,
-            weatherIcon: weatherData.weatherIcon,
-            windSpeed: weatherData.windSpeed,
-            windDeg: weatherData.windDeg,
-            tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
-            airQualityIndex: weatherData.airQualityIndex,
-            small: "위험",
-            middle: "위험",
-            large: "보통",
-          });
-        } else if (-8 > weatherData.temp) {
-          res.status(200).json({
-            cityName: "서울",
-            temp: weatherData.temp,
-            feelLike: weatherData.feelLike,
-            humidity: weatherData.humidity,
-            tempMin: weatherData.tempMin,
-            tempMax: weatherData.tempMax,
-            weatherDescription: weatherData.weatherDescription,
-            weatherIcon: weatherData.weatherIcon,
-            windSpeed: weatherData.windSpeed,
-            windDeg: weatherData.windDeg,
-            tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
-            airQualityIndex: weatherData.airQualityIndex,
-            small: "위험",
-            middle: "위험",
-            large: "위험",
-          });
-        }
+        const responseData = handleWeatherData(weatherData);
+        res.status(200).json({
+          responseData,
+        });
       } else {
         res.status(507).json({
           message: "There is an error with the API used by the server.",
@@ -265,19 +276,13 @@ module.exports = {
       // console.log("🚀 ~ file: landing.js ~ line 63 ~ //getWeather ~ weatherData", weatherData)
 
       if (weatherData) {
+        const responseData = handleWeatherData(weatherData, name);
+        console.log(
+          "🚀 ~ file: weather.js ~ line 280 ~ post: ~ responseData",
+          responseData
+        );
         res.status(200).json({
-          cityName: name,
-          temp: weatherData.temp,
-          feelLike: weatherData.feelLike,
-          humidity: weatherData.humidity,
-          tempMin: weatherData.tempMin,
-          tempMax: weatherData.tempMax,
-          weatherDescription: weatherData.weatherDescription,
-          weatherIcon: weatherData.weatherIcon,
-          windSpeed: weatherData.windSpeed,
-          windDeg: weatherData.windDeg,
-          tempDifferenceYesterday: weatherData.tempDifferenceYesterday,
-          airQualityIndex: weatherData.airQualityIndex,
+          responseData,
         });
       } else {
         res.status(507).json({
