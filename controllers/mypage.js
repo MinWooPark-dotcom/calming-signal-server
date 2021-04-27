@@ -117,6 +117,7 @@ module.exports = {
     else if (category === "petname") {
       console.log(category);
       console.log(newPetName);
+
       const changePetName = await Pet.update(
         {
           name: newPetName,
@@ -138,7 +139,9 @@ module.exports = {
       } else {
         res.status(401).json({ message: "Unauthorized" });
       }
-    } else if (category === "petbreed") {
+    }
+    // ! 반려견종 변경
+    else if (category === "petbreed") {
       const changePetBreed = await Pet.update(
         {
           breed: newPetBreed,
@@ -162,40 +165,62 @@ module.exports = {
       }
     }
 
-    // ! 반려견종 변경
-
     //! 지역 변경
     else if (category === "location") {
-      console.log("🚀 ~ file: mypage.js ~ line 213 ~ post: ~ city", city);
-      const getLocationId = await Location.findOne({
-        where: {
-          name: city,
-        },
-      });
-      // console.log(
-      //   "🚀 ~ file: mypage.js ~ line 175 ~ patch: ~ getLocationId",
-      //   getLocationId
-      // );
-      const updatedUser = await User.update(
-        {
-          locationId: getLocationId.dataValues.id,
-        },
-        {
-          where: {
-            id: userId,
+      if (city === null) {
+        const updatedUser = await User.update(
+          {
+            locationId: null,
           },
+          {
+            where: {
+              id: userId,
+            },
+          }
+        );
+        console.log(
+          "🚀 ~ file: mypage.js ~ line 189 ~ patch: ~ updatedUser",
+          updatedUser
+        );
+        if (updatedUser[0] === 1) {
+          res.status(200).json({
+            message: "OK",
+          });
+        } else {
+          res.status(401).json({ message: "Unauthorized" });
         }
-      );
-      console.log(
-        "🚀 ~ file: mypage.js ~ line 189 ~ patch: ~ updatedUser",
-        updatedUser
-      );
-      if (updatedUser[0] === 1) {
-        res.status(200).json({
-          message: "OK",
-        });
       } else {
-        res.status(401).json({ message: "Unauthorized" });
+        console.log("🚀 ~ file: mypage.js ~ line 213 ~ post: ~ city", city);
+        const getLocationId = await Location.findOne({
+          where: {
+            name: city,
+          },
+        });
+        // console.log(
+        //   "🚀 ~ file: mypage.js ~ line 175 ~ patch: ~ getLocationId",
+        //   getLocationId
+        // );
+        const updatedUser = await User.update(
+          {
+            locationId: getLocationId.dataValues.id,
+          },
+          {
+            where: {
+              id: userId,
+            },
+          }
+        );
+        console.log(
+          "🚀 ~ file: mypage.js ~ line 189 ~ patch: ~ updatedUser",
+          updatedUser
+        );
+        if (updatedUser[0] === 1) {
+          res.status(200).json({
+            message: "OK",
+          });
+        } else {
+          res.status(401).json({ message: "Unauthorized" });
+        }
       }
     }
   },
@@ -243,5 +268,26 @@ module.exports = {
 
     // ! 반려견종 변경
   },
-  delete: async (req, res) => {},
+  delete: async (req, res) => {
+    const { userId } = req.session;
+    const { category } = req.params;
+    if (category === "petname" || category === "petbreed") {
+      const deletePetInfo = await Pet.destroy({
+        where: {
+          userId,
+        },
+      });
+      console.log(
+        "🚀 ~ file: mypage.js ~ line 256 ~ delete: ~ deletePetInfo",
+        deletePetInfo
+      );
+      if (deletePetInfo === 1) {
+        res.status(200).json({
+          message: "OK",
+        });
+      } else {
+        res.status(401).json({ message: "Unauthorized" });
+      }
+    }
+  },
 };
