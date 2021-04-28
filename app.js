@@ -38,18 +38,18 @@ app.use(
   })
 );
 
-// app.use("/", router);
+// https
+// .createServer(
+//   {
+//     key: fs.readFileSync(__dirname + "/key.pem", "utf-8"),
+//     cert: fs.readFileSync(__dirname + "/cert.pem", "utf-8"),
+//   },
+//   app.use("/", router)
+//   )
+//   .listen(3002);
 
-https
-  .createServer(
-    {
-      key: fs.readFileSync(__dirname + "/key.pem", "utf-8"),
-      cert: fs.readFileSync(__dirname + "/cert.pem", "utf-8"),
-    },
-    app.use("/", router)
-  )
-  .listen(3002);
+app.use("/", router);
 
-// app.listen(app.get('port'), () => {
-//     console.log(app.get('port'), '번 포트')
-// })
+app.listen(app.get("port"), () => {
+  console.log(app.get("port"), "번 포트");
+});
