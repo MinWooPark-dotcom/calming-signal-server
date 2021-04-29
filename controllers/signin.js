@@ -11,6 +11,10 @@ module.exports = {
           where: { email },
         });
 
+        if (!getSalt) {
+          res.status(401).json({ message: "Unauthorized" });
+        }
+
         let salt = getSalt.dataValues.salt;
 
         crypto.pbkdf2(
@@ -39,6 +43,8 @@ module.exports = {
                   message: "OK",
                 });
               }
+            } else {
+              res.status(401).json({ message: "Unauthorized" });
             }
           }
         );
