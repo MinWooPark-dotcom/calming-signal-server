@@ -18,16 +18,7 @@ module.exports = {
           id: userId,
         },
       });
-      console.log(
-        "🚀 ~ file: userInfo.js ~ line 21 ~ get: ~ userInfo",
-        userInfo.dataValues.Pets
-      );
-      console.log(
-        "🚀 ~ file: userInfo.js ~ line 21 ~ get: ~ userInfo",
-        userInfo.dataValues.Location
-      );
 
-      //! 테스트 해 봐야함
       if (userInfo) {
         if (
           userInfo.dataValues.Pets.length !== 0 &&
