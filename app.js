@@ -24,7 +24,8 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
-      secure: false,
+      secure: true,
+      sameSite: "none",
     },
     name: "session-cookie",
   })
@@ -32,6 +33,7 @@ app.use(
 
 app.use(
   cors({
+    // origin: "https://localhost:3000",
     origin: "https://calming-signal.ml", // 배포시s3 도메인으로 변경
     method: "GET,POST,OPTION, PATCH",
     credentials: true, // 쿠키를 요청에 포함
@@ -39,12 +41,12 @@ app.use(
 );
 
 // https
-// .createServer(
-//   {
-//     key: fs.readFileSync(__dirname + "/key.pem", "utf-8"),
-//     cert: fs.readFileSync(__dirname + "/cert.pem", "utf-8"),
-//   },
-//   app.use("/", router)
+//   .createServer(
+//     {
+//       key: fs.readFileSync(__dirname + "/key.pem", "utf-8"),
+//       cert: fs.readFileSync(__dirname + "/cert.pem", "utf-8"),
+//     },
+//     app.use("/", router)
 //   )
 //   .listen(3002);
 
