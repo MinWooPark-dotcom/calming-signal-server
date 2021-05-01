@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  landing,
   signup,
   signin,
   board,
@@ -13,9 +12,6 @@ const {
   mypage,
   weather,
 } = require("../controllers");
-
-// * GET /
-router.get("/", landing.get);
 
 // * POST /signup
 router.post("/signup", signup.post);
