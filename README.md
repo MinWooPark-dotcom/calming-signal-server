@@ -1,5 +1,5 @@
-## 🏠 [Notion 문서](https://www.notion.so/Calming-Signal-4ec7da92adeb4be69c7047f129831ae1) 
-
+## 🏠 [Homepage](https://calming-signal.ml/) 
+## 📝 [Notion 문서](https://www.notion.so/Calming-Signal-4ec7da92adeb4be69c7047f129831ae1)
 
 # Welcome to Calming signal 🐕
 
