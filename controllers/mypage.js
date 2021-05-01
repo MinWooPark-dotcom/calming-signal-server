@@ -12,7 +12,6 @@ module.exports = {
       newPassword,
       newName,
       newPetName,
-      prevPetBreed,
       newPetBreed,
       city,
     } = req.body;
@@ -228,8 +227,8 @@ module.exports = {
     const { userId } = req.session;
     const { category } = req.params;
     // console.log("🚀 ~ file: mypage.js ~ line 10 ~ post: ~ category", category); // password
-    const { newPetName, prevPetBreed, newPetBreed } = req.body;
-    // ! 반려견 이름 변경
+    const { newPetName, newPetBreed } = req.body;
+    // ! 반려견 이름 또는 견종 추가
     if (category === "petname") {
       console.log(category);
       console.log(newPetName);
