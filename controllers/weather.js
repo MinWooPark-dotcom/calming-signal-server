@@ -1,7 +1,6 @@
 const { Location } = require("../models");
 
 const axios = require("axios");
-const { weather } = require(".");
 require("dotenv").config();
 
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
