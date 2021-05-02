@@ -1,5 +1,6 @@
 ## 🏠 [Homepage](https://calming-signal.ml/) 
 ## 📝 [Notion 문서](https://www.notion.so/Calming-Signal-4ec7da92adeb4be69c7047f129831ae1)
+## 🏃‍♂️ [회고](https://velog.io/@qmasem/%EA%B0%9C%EC%9D%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-Calming-Signal-%ED%9A%8C%EA%B3%A0)
 
 # Welcome to Calming signal 🐕
 
