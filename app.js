@@ -22,8 +22,8 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      //secure: true,
+      // sameSite: "none",
     },
     name: "session-cookie",
   })
@@ -31,14 +31,14 @@ app.use(
 
 app.use(
   cors({
-    origin: "https://calming-signal.ml", // 배포시s3 도메인으로 변경
+    origin: ["https://calming-signal.ml", "https://www.calming-signal.ml"],
     method: "GET,POST,OPTION, PATCH",
-    credentials: true, // 쿠키를 요청에 포함
+    credentials: true,
   })
 );
 
 app.use("/", router);
 
-app.listen(app.get("port"), () => {
-  console.log(app.get("port"), "번 포트");
+app.listen(80, () => {
+  console.log("80번 포트");
 });
