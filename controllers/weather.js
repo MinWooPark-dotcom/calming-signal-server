@@ -1,7 +1,6 @@
 const { Location } = require("../models");
 
 const axios = require("axios");
-const { weather } = require(".");
 require("dotenv").config();
 
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
@@ -226,19 +225,12 @@ const handleWeatherData = (weatherData, cityName = "서울") => {
 module.exports = {
   get: async (req, res) => {
     try {
-      // const getWeather = async (cityId, cityLat, cityLon, weatherApiKey) => {
-      // const SEOUL_ID = process.env.SEOUL_ID;
-      // const SEOUL_LAT = process.env.SEOUL_LAT;
-      // const SEOUL_LON = process.env.SEOUL_LON;
-      // const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
       const weatherData = await getWeather(
         SEOUL_ID,
         SEOUL_LAT,
         SEOUL_LON,
         WEATHER_API_KEY
       );
-      // console.log("🚀 ~ file: landing.js ~ line 63 ~ //getWeather ~ weatherData", weatherData)
-
       if (weatherData) {
         const responseData = handleWeatherData(weatherData);
         res.status(200).json({
@@ -255,17 +247,12 @@ module.exports = {
   },
   post: async (req, res) => {
     try {
-      console.log("🚀 ~ file: landing.js ~ line 11 ~ get: ~ req", req.body);
       const { city } = req.body;
       const getLocation = await Location.findOne({
         where: {
           name: city,
         },
       });
-      console.log(
-        "🚀 ~ file: landing.js ~ line 98 ~ post: ~ getLocation",
-        getLocation
-      );
       const { name, number, latitude, longitude } = getLocation.dataValues;
       const weatherData = await getWeather(
         number,
@@ -273,14 +260,8 @@ module.exports = {
         longitude,
         WEATHER_API_KEY
       );
-      // console.log("🚀 ~ file: landing.js ~ line 63 ~ //getWeather ~ weatherData", weatherData)
-
       if (weatherData) {
         const responseData = handleWeatherData(weatherData, name);
-        console.log(
-          "🚀 ~ file: weather.js ~ line 280 ~ post: ~ responseData",
-          responseData
-        );
         res.status(200).json({
           responseData,
         });

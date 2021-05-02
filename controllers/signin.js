@@ -24,7 +24,6 @@ module.exports = {
           64,
           "sha512",
           async (err, key) => {
-            //   console.log("password:", key.toString("base64"));
             let getPassword = key.toString("base64");
 
             if (email && getPassword) {

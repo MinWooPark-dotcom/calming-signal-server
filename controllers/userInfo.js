@@ -3,7 +3,6 @@ const { User, Pet, Location } = require("../models");
 module.exports = {
   get: async (req, res) => {
     const { userId } = req.session;
-    console.log("userId>>>>>", userId);
     try {
       const userInfo = await User.findOne({
         include: [
@@ -44,7 +43,6 @@ module.exports = {
           userInfo.dataValues.Pets.length !== 0 &&
           userInfo.dataValues.Location === null
         ) {
-          console.log("if (userInfo.Pets[0].dataValues) {");
           res.status(200).json({
             email: userInfo.dataValues.email,
             name: userInfo.dataValues.name,

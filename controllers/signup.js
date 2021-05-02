@@ -16,7 +16,6 @@ module.exports = {
             64,
             "sha512",
             async (err, key) => {
-              // console.log("password:", key.toString("base64"));
               let password = key.toString("base64");
               //! 유저가 지역 설정했다면 가입 시 locationId 넣기
               if (city) {
