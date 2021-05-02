@@ -56,7 +56,9 @@ module.exports = {
                     });
                   }
                 }
-              } else {
+              }
+              // ! 지역 설정 안 했을 경우
+              else {
                 const [user, created] = await User.findOrCreate({
                   where: {
                     email,
@@ -85,24 +87,6 @@ module.exports = {
                     message: "Created",
                   });
                 }
-              }
-
-              if (petName && petBreed) {
-                const pet = await Pet.create({
-                  userId: user.dataValues.id,
-                  name: petName,
-                  breed: petBreed,
-                });
-              }
-
-              if (!created) {
-                res.status(409).json({
-                  message: "This account exists.",
-                });
-              } else {
-                res.status(201).json({
-                  message: "Created",
-                });
               }
             }
           );
